@@ -1,5 +1,5 @@
 package edu.clayton.csit.antlab.person;
-
+// :encoding=Native2ASCII:ff=dos:autoIndent=full:folding=java:indentSize=4:maxLineLen=80:mode=java:tabSize=4:wrap=soft:
 /**
  *  A simple class for person 2
  *  returns their name and a
@@ -30,8 +30,38 @@ public class Person2 {
 	 * @return the modified string
 	 */
 	private String calc(String input) {
-	  //Person 2 put your implementation here
-	  return null;
+	  //Generate permutation
+	  int[] permutation = new int[input.length()];
+	  int rand = 0;
+	  boolean insert = true;
+	  for (int i = 0; i < permutation.length(); i++) {
+	  	  insert = true;
+	  	  do {
+	  	  	  rand = (int)(Math.random()*permutation.length);
+	  	  	  insert = !arrayContains(permutation,i,rand);
+	  	  } while (!insert);
+	  	  permutation[i] = rand
+	  }
+	  char[] inChars = input.toCharArray();
+	  StringBuilder output = new StringBuilder();
+	  //This loop would break if there were surrogates, because there's no
+	  //guarantee that a pair of them would move as a unit
+	  for (int i = 0; i < inChars.length; i++) {
+	  	  output.append(inChars[permutation[i]]);
+	  }
+	  return output.toString();
+	}
+	/**
+	 * Originally written for a personal project
+	 * @author Dominique Jaramillo
+	 */
+	private static boolean arrayContains(byte[] arr, int maxIndx, byte search) {
+		byte d = (byte)(0);
+		for (int i = 0; i < maxIndx; i++) {
+			d = arr[i];
+			if (d==search) return true;
+		}
+		return false;
 	}
 	/**
 	 * Return a string rep of this object
